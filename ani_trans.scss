@@ -17,7 +17,7 @@ $item_duration: 0.8s !default;
             @include mx_transform(matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) !important);
             opacity: 1;
 
-            /*动画延迟*/
+            /*相应倍率的延迟后做动画*/
             @for $i from 1 through 4
             {
                 &.x#{$i}
