@@ -63,6 +63,7 @@
             .cycle
             {
                 background: url(../images/box.png) center center no-repeat;
+                background-size: 280px auto;
                 @include ani_trans($rx: -180deg);
             }
         }
