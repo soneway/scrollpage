@@ -225,16 +225,74 @@
   float: none;
 }
 
-/*亦是*/
+/*变量*/
 .at-item {
   -webkit-transition: all 0.8s ease;
   transition: all 0.8s ease;
-  /*复位动画*/
+  opacity: 0;
 }
+/*复位动画*/
 .current .at-item {
   /*重置为默认值*/
   -webkit-transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) !important;
   transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) !important;
+  opacity: 1;
+  /*动画延迟*/
+}
+.current .at-item.x1 {
+  -webkit-transition-delay: 0.8s;
+  transition-delay: 0.8s;
+}
+.current .at-item.x2 {
+  -webkit-transition-delay: 1.6s;
+  transition-delay: 1.6s;
+}
+.current .at-item.x3 {
+  -webkit-transition-delay: 2.4s;
+  transition-delay: 2.4s;
+}
+.current .at-item.x4 {
+  -webkit-transition-delay: 3.2s;
+  transition-delay: 3.2s;
+}
+
+/*transform函数*/
+.i1 {
+  background: url(../images/i1.png) no-repeat center center/270px auto;
+}
+
+.i2 {
+  background: url(../images/i2.png) no-repeat center center/180px auto;
+}
+
+.i3 {
+  background: url(../images/i3.png) no-repeat center center/180px auto;
+}
+
+.part1 .i1 {
+  -webkit-transform: translate3d(0, -50%, 0) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewX(0deg) skewY(0deg);
+  transform: translate3d(0, -50%, 0) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewX(0deg) skewY(0deg);
+}
+.part1 .i2 {
+  -webkit-transform: translate3d(0, 0, 0) scale3d(2, 2, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewX(0deg) skewY(0deg);
+  transform: translate3d(0, 0, 0) scale3d(2, 2, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewX(0deg) skewY(0deg);
+}
+.part1 .i3 {
+  -webkit-transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(-180deg) rotateY(0deg) rotateZ(0deg) skewX(0deg) skewY(0deg);
+  transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(-180deg) rotateY(0deg) rotateZ(0deg) skewX(0deg) skewY(0deg);
+}
+
+.part2 .i1 {
+  -webkit-transform: translate3d(-50%, 0, 0) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewX(0deg) skewY(0deg);
+  transform: translate3d(-50%, 0, 0) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewX(0deg) skewY(0deg);
+}
+.part2 .i2 {
+  -webkit-transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewX(-40deg) skewY(0deg);
+  transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewX(-40deg) skewY(0deg);
+}
+.part2 .i3 {
+  -webkit-transform: translate3d(50%, 0, 0) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(-180deg) skewX(0deg) skewY(0deg);
+  transform: translate3d(50%, 0, 0) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(-180deg) skewX(0deg) skewY(0deg);
 }
 
 /*其他*/
@@ -263,10 +321,4 @@
 /*轮播*/
 #carousel .pi-carousel-wrap > div {
   position: relative;
-}
-.part1 .cycle {
-  background: url(../images/box.png) center center no-repeat;
-  background-size: 280px auto;
-  -webkit-transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(-180deg) rotateY(0deg) rotateZ(0deg);
-  transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(-180deg) rotateY(0deg) rotateZ(0deg);
 }

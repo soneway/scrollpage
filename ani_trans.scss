@@ -1,4 +1,4 @@
-﻿/*亦是*/
+﻿/*变量*/
 $item_duration: 0.8s !default;
 
 .at-item
@@ -6,19 +6,31 @@ $item_duration: 0.8s !default;
     @extend %ph_palt;
     @extend %ph_full;
     @include mx_transition(all $item_duration ease);
+    opacity: 0;
 
-    /*复位动画*/
     @at-root
     {
+        /*复位动画*/
         .current &
         {
             /*重置为默认值*/
             @include mx_transform(matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) !important);
+            opacity: 1;
+
+            /*动画延迟*/
+            @for $i from 1 through 4
+            {
+                &.x#{$i}
+                {
+                    @include mx_transition-delay($item_duration * $i);
+                }
+            }
         }
     }
 }
 
 
-@mixin ani_trans($tx: 0, $ty: 0, $tz:0, $sx: 1, $sy: 1, $sz: 1, $rx: 0deg, $ry: 0deg, $rz: 0deg ) {
-    @include mx_transform(translate3d($tx, $ty, $tz) scale3d($sx, $sy, $sz) rotateX($rx) rotateY($ry) rotateZ($rz));
+/*transform函数*/
+@mixin ani_trans($tx: 0, $ty: 0, $tz:0, $sx: 1, $sy: 1, $sz: 1, $rx: 0deg, $ry: 0deg, $rz: 0deg, $kx: 0deg, $ky: 0deg) {
+    @include mx_transform(translate3d($tx, $ty, $tz) scale3d($sx, $sy, $sz) rotateX($rx) rotateY($ry) rotateZ($rz) skewX($kx) skewY($ky));
 }

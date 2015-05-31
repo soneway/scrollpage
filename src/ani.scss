@@ -1,0 +1,54 @@
+﻿.i1
+{
+    background: url(../images/i1.png) no-repeat center center / 270px auto;
+}
+
+
+.i2
+{
+    background: url(../images/i2.png) no-repeat center center / 180px auto;
+}
+
+
+.i3
+{
+    background: url(../images/i3.png) no-repeat center center / 180px auto;
+}
+
+
+.part1
+{
+    .i1
+    {
+        @include ani_trans($ty: -50%);
+    }
+
+    .i2
+    {
+        @include ani_trans($sx: 2, $sy: 2);
+    }
+
+    .i3
+    {
+        @include ani_trans($rx: -180deg);
+    }
+}
+
+
+.part2
+{
+    .i1
+    {
+        @include ani_trans($tx: -50%);
+    }
+
+    .i2
+    {
+        @include ani_trans($kx: -40deg);
+    }
+
+    .i3
+    {
+        @include ani_trans($rz: -180deg, $tx: 50%);
+    }
+}

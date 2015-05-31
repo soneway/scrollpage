@@ -1,6 +1,6 @@
 ﻿/*变量*/
 /*外部引入*/
-@import 'soneway/scss/var', 'soneway/scss/spinner', 'soneway/plugin/carousel', '../ani_trans';
+@import 'soneway/scss/var', 'soneway/scss/spinner', 'soneway/plugin/carousel', '../ani_trans', 'ani';
 
 
 /*其他*/
@@ -54,18 +54,5 @@
     .pi-carousel-wrap > div
     {
         position: relative;
-    }
-
-    @at-root
-    {
-        .part1
-        {
-            .cycle
-            {
-                background: url(../images/box.png) center center no-repeat;
-                background-size: 280px auto;
-                @include ani_trans($rx: -180deg);
-            }
-        }
     }
 }
