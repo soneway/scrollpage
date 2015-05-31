@@ -1,0 +1,70 @@
+﻿/*变量*/
+/*外部引入*/
+@import 'soneway/scss/var', 'soneway/scss/spinner', 'soneway/plugin/carousel', '../ani_trans';
+
+
+/*其他*/
+/*mainbox*/
+#mainbox
+{
+    @extend %ph_full;
+    overflow: hidden;
+}
+
+
+/*loading*/
+#loading
+{
+    display: table;
+    @extend %ph_palt;
+    @extend %ph_full;
+    background-color: #fff;
+    z-index: 5;
+    @extend %ph_transall;
+    //@include mx_transition(background-color 0.3s ease);
+
+    & > div
+    {
+        @extend %ph_td;
+        text-align: center;
+    }
+
+    @at-root
+    {
+        .loaded &
+        {
+            visibility: hidden;
+            background-color: transparent;
+
+            & > div
+            {
+                visibility: hidden;
+            }
+        }
+    }
+}
+
+
+/*轮播*/
+#carousel
+{
+    @extend %ph_palt;
+    @extend %ph_full;
+
+    .pi-carousel-wrap > div
+    {
+        position: relative;
+    }
+
+    @at-root
+    {
+        .part1
+        {
+            .cycle
+            {
+                background: url(../images/box.png) center center no-repeat;
+                @include ani_trans($rx: -180deg);
+            }
+        }
+    }
+}

@@ -1,0 +1,24 @@
+﻿/*亦是*/
+$item_duration: 0.8s !default;
+
+.at-item
+{
+    @extend %ph_palt;
+    @extend %ph_full;
+    @include mx_transition(all $item_duration ease);
+
+    /*复位动画*/
+    @at-root
+    {
+        .current &
+        {
+            /*重置为默认值*/
+            @include mx_transform(matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) !important);
+        }
+    }
+}
+
+
+@mixin ani_trans($tx: 0, $ty: 0, $tz:0, $sx: 1, $sy: 1, $sz: 1, $rx: 0deg, $ry: 0deg, $rz: 0deg ) {
+    @include mx_transform(translate3d($tx, $ty, $tz) scale3d($sx, $sy, $sz) rotateX($rx) rotateY($ry) rotateZ($rz));
+}
