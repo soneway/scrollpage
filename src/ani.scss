@@ -20,17 +20,17 @@
 {
     .i1
     {
-        @include ani_trans($ty: -50%);
+        @include ani_trans($ty: -50%, $ry: -180deg);
     }
 
     .i2
     {
-        @include ani_trans($sx: 2, $sy: 2);
+        @include ani_trans($sx: 2, $sy: 2, $ry: -180deg);
     }
 
     .i3
     {
-        @include ani_trans($rx: -180deg);
+        @include ani_trans($rx: -180deg, $ry: -180deg);
     }
 }
 
@@ -39,12 +39,12 @@
 {
     .i1
     {
-        @include ani_trans($tx: -50%);
+        @include ani_trans($tx: -50%, $rx: 180deg, $ky: 50deg);
     }
 
     .i2
     {
-        @include ani_trans($kx: -40deg);
+        @include ani_trans($kx: -40deg, $tx: 50%);
     }
 
     .i3
