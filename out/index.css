@@ -421,38 +421,65 @@ transform动画函数ani_trans
     background: url(../images/part2/i3.png) center center no-repeat; }
 
 /*动画*/
+/*旋转动画*/
+@-webkit-keyframes ani_circle
+{
+  0%
+{
+    -webkit-transform: rotateZ(0deg); }
+  100%
+{
+    -webkit-transform: rotateZ(360deg); } }
+
+@keyframes ani_circle
+{
+  0%
+{
+    transform: rotateZ(0deg); }
+  100%
+{
+    transform: rotateZ(360deg); } }
+
 .part1
 .i1 {
+  background-size: 270px auto;
   -webkit-transform: translate3d(0, -50%, 0)rotateY(-180deg);
-  transform: translate3d(0, -50%, 0)rotateY(-180deg);
-  background-size: 270px auto; }
+  transform: translate3d(0, -50%, 0)rotateY(-180deg); }
 
 .part1
 .i2 {
+  width: 180px;
+  height: 180px;
+  left: 50%;
+  top: 50%;
+  margin-left: -90px;
+  margin-top: -90px;
+  background-size: cover;
   -webkit-transform: scale3d(2, 2, 1)rotateY(-180deg);
   transform: scale3d(2, 2, 1)rotateY(-180deg);
-  background-size: 180px auto; }
+  -webkit-animation: ani_circle 1s ease infinite 2s;
+  animation: ani_circle 1s ease infinite 2s; }
 
 .part1
 .i3 {
+  background-size: 180px auto;
   -webkit-transform: rotateX(-180deg)rotateY(-180deg);
-  transform: rotateX(-180deg)rotateY(-180deg);
-  background-size: 180px auto; }
+  transform: rotateX(-180deg)rotateY(-180deg); }
 
 .part2
 .i1 {
+  background-size: 270px auto;
   -webkit-transform: translate3d(-50%, 0, 0)rotateX(180deg)skewY(50deg);
-  transform: translate3d(-50%, 0, 0)rotateX(180deg)skewY(50deg);
-  background-size: 270px auto; }
+  transform: translate3d(-50%, 0, 0)rotateX(180deg)skewY(50deg); }
 
 .part2
 .i2 {
+  background-size: 180px auto;
   -webkit-transform: translate3d(50%, 0, 0)skewX(-40deg);
-  transform: translate3d(50%, 0, 0)skewX(-40deg);
-  background-size: 180px auto; }
+  transform: translate3d(50%, 0, 0)skewX(-40deg); }
 
 .part2
 .i3 {
+  background-size: 270px auto;
   -webkit-transform: translate3d(50%, 0, 0)rotateZ(-180deg);
-  transform: translate3d(50%, 0, 0)rotateZ(-180deg);
-  background-size: 270px auto; }
+  transform: translate3d(50%, 0, 0)rotateZ(-180deg); }
