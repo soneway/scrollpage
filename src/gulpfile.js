@@ -7,39 +7,39 @@ var out = '../dist/';
 var isPack = 1;
 //配置对象
 var config = {
-    img: {
-        src: ['./img/**'],
+    img : {
+        src  : ['./img/**'],
         watch: ['./img/**'],
-        dest: out + 'img'
+        dest : out + 'img'
     },
-    css: {
+    css : {
         //源文件
-        src: ['./css/*.scss'],
+        src   : ['./css/*.scss'],
         //监听文件
-        watch: ['./css/**'],
+        watch : ['./css/**'],
         //输出文件夹
-        dest: out + 'css',
+        dest  : out + 'css',
         //是否压缩
         isPack: undefined
     },
-    js: {
-        src: ['./js/*.js'],
-        watch: ['./js/**'],
-        dest: out + 'js',
+    js  : {
+        src   : ['./js/*.js'],
+        watch : ['./js/**'],
+        dest  : out + 'js',
         isPack: undefined,
         //模块化js文件shim
-        shim: {
+        shim  : {
             jq: {
-                path: '/static/v1/jq/jq.js',
+                path   : '/static/v1/jq/jq.js',
                 //闭包中module是undefined,js代码中将按照没有模块化的方式运行,从而使得成员变量正常添加到全局变量(var a = require('jq')时,a的值将是window.$)
                 exports: '$'
             }
         }
     },
     html: {
-        src: ['./*.html'],
-        watch: ['./*.html'],
-        dest: out,
+        src   : ['./*.html'],
+        watch : ['./*.html', './html/**'],
+        dest  : out,
         isPack: undefined
     }
 };
@@ -48,91 +48,107 @@ var gulp = require('gulp');
 
 
 //img任务
-//图片压缩
-var imagemin = require('gulp-imagemin');
-var pngquant = require('imagemin-pngquant');
-gulp.task('img', function () {
+(function () {
     var conf = config.img;
+    var imagemin = require('gulp-imagemin');
+    var pngquant = require('imagemin-pngquant');
 
-    if (conf) {
+    //图片压缩
+    gulp.task('img', function () {
         gulp.src(conf.src)
             .pipe(imagemin({
                 progressive: true,
                 svgoPlugins: [{removeViewBox: false}],
-                use: [pngquant()]
+                use        : [pngquant()]
             }))
             .pipe(gulp.dest(conf.dest));
-    }
-});
+    });
+})();
 
 
 //css任务
-//编译sass,压缩css
-var sass = require('gulp-sass');
-var minifyCss = require('gulp-minify-css');
-var base64 = require('gulp-base64');
-gulp.task('css', function () {
+(function () {
     var conf = config.css;
+    var sass = require('gulp-sass');
+    var minifyCss = require('gulp-minify-css');
+    var base64 = require('gulp-base64');
 
-    var task = gulp.src(conf.src)
-        //编译
-        .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest(conf.dest));
-
-    //压缩
-    if (conf.isPack === undefined ? isPack : conf.isPack) {
-        task.pipe(minifyCss())
-            .pipe(base64({
-                maxImageSize: 10 * 1024 //小于该设定K数的文件就编码
-            }))
+    //编译sass,压缩css
+    gulp.task('css', function () {
+        var task = gulp.src(conf.src)
+            //编译
+            .pipe(sass().on('error', sass.logError))
             .pipe(gulp.dest(conf.dest));
-    }
-});
+
+        //压缩
+        if (conf.isPack === undefined ? isPack : conf.isPack) {
+            task.pipe(minifyCss())
+                .pipe(base64({
+                    //排除匹配的
+                    exclude     : [/^http:\/\/.+$/i],
+                    //小于该设定K数的文件就编码
+                    maxImageSize: 5 * 1024
+                }))
+                .pipe(gulp.dest(conf.dest));
+        }
+    });
+})();
 
 
 //js任务
-//browserify编译合并,压缩文件js
-var browserify = require('gulp-browserify');
-var uglify = require('gulp-uglify');
-gulp.task('js', function () {
+(function () {
     var conf = config.js;
+    var browserify = require('gulp-browserify');
+    var uglify = require('gulp-uglify');
 
-    var task = gulp.src(conf.src)
-        //编译合并
-        .pipe(browserify({
-            shim: conf.shim
-        }))
-        .pipe(gulp.dest(conf.dest));
-
-    //压缩
-    if (conf.isPack === undefined ? isPack : conf.isPack) {
-        task.pipe(uglify())
+    //browserify编译合并,压缩文件js
+    gulp.task('js', function () {
+        var task = gulp.src(conf.src, {base: conf.base})
+            //编译合并
+            .pipe(browserify({
+                shim: conf.shim
+            }))
             .pipe(gulp.dest(conf.dest));
-    }
-});
+
+        //压缩
+        if (conf.isPack === undefined ? isPack : conf.isPack) {
+            task.pipe(uglify())
+                .pipe(gulp.dest(conf.dest));
+        }
+    });
+})();
 
 
 //html任务
-//html压缩
-var htmlmin = require('gulp-htmlmin');
-gulp.task('html', function () {
+(function () {
     var conf = config.html;
+    var htmlmin = require('gulp-htmlmin');
+    var includer = require('gulp-include-html');
 
-    if (conf) {
+    //html编译和压缩
+    gulp.task('html', function () {
         var task = gulp.src(conf.src)
+            //include编译
+            .pipe(includer({
+                //include语法
+                include: '@include',
+                //base目录
+                baseDir: './html/'
+            }))
             .pipe(gulp.dest(conf.dest));
 
+        //压缩
         if (conf.isPack === undefined ? isPack : conf.isPack) {
             task.pipe(htmlmin({
                 collapseWhitespace: true,
-                removeComments: true,
-                minifyJS: true,
-                minifyCSS: true
+                removeComments    : true,
+                minifyJS          : true,
+                minifyCSS         : true
             }))
                 .pipe(gulp.dest(conf.dest));
         }
-    }
-});
+    });
+})();
 
 
 //监听任务
