@@ -1,4 +1,3 @@
-//npm install gulp gulp-sass gulp-minify-css gulp-browserify gulp-uglify gulp-imagemin imagemin-pngquant gulp-htmlmin gulp-base64 --save-dev
 'use strict';
 
 //输出文件夹
