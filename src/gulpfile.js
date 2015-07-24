@@ -44,11 +44,18 @@ var config = {
     }
 };
 
+
+//gulp插件的require函数
+var gulpDir = 'D:/node_modules/';
+function gr(name) {
+    return require(gulpDir + name);
+}
+
 var gulp = require('gulp');
 
 
 //img任务
-(function () {
+(function (require) {
     var conf = config.img;
     var imagemin = require('gulp-imagemin');
     var pngquant = require('imagemin-pngquant');
@@ -59,15 +66,15 @@ var gulp = require('gulp');
             .pipe(imagemin({
                 progressive: true,
                 svgoPlugins: [{removeViewBox: false}],
-                use        : [pngquant()]
+                use        : [pngquant({quality: '65-80'})]
             }))
             .pipe(gulp.dest(conf.dest));
     });
-})();
+})(gr);
 
 
 //css任务
-(function () {
+(function (require) {
     var conf = config.css;
     var sass = require('gulp-sass');
     var minifyCss = require('gulp-minify-css');
@@ -92,18 +99,18 @@ var gulp = require('gulp');
                 .pipe(gulp.dest(conf.dest));
         }
     });
-})();
+})(gr);
 
 
 //js任务
-(function () {
+(function (require) {
     var conf = config.js;
     var browserify = require('gulp-browserify');
     var uglify = require('gulp-uglify');
 
     //browserify编译合并,压缩文件js
     gulp.task('js', function () {
-        var task = gulp.src(conf.src, {base: conf.base})
+        var task = gulp.src(conf.src)
             //编译合并
             .pipe(browserify({
                 shim: conf.shim
@@ -116,11 +123,11 @@ var gulp = require('gulp');
                 .pipe(gulp.dest(conf.dest));
         }
     });
-})();
+})(gr);
 
 
 //html任务
-(function () {
+(function (require) {
     var conf = config.html;
     var htmlmin = require('gulp-htmlmin');
     var includer = require('gulp-include-html');
@@ -148,7 +155,7 @@ var gulp = require('gulp');
                 .pipe(gulp.dest(conf.dest));
         }
     });
-})();
+})(gr);
 
 
 //监听任务
