@@ -1,4 +1,4 @@
-@import "Y:/static/v1/scss/ani_trans";
+﻿@import "Y:/static/v1/scss/ani_trans";
 @import "Y:/static/v1/scss/animate";
 
 
@@ -10,19 +10,17 @@
 
     .pi-carousel-wrap
     {
-        //height: 100%;
 
         & > div
         {
             position: relative;
-            //height: 100%;
         }
     }
 }
 
 
 /*每一部分的背景图*/
-@for $i from 1 through 2
+@for $i from 1 through 4
 {
     .part#{$i}
     {
@@ -40,25 +38,107 @@
 }
 
 
+[class^="i"]
+{
+    @extend %ph_palt;
+    @extend %ph_full;
+}
+
+
 /*part1*/
 .part1
 {
-    /*动画时*/
+    .i1
+    {
+        //background: url(../images/i1.png) no-repeat center center / 270px auto;//安卓4.0-4.3不支持呀,泥煤的
+        background-size: 270px auto;
+    }
+
+    .i2
+    {
+        $w: 180px;
+
+        width: $w;
+        height: $w;
+        left: 50%;
+        top: 50%;
+        margin-left: -$w / 2;
+        margin-top: -$w / 2;
+        background-size: cover;
+    }
+
+    .i3
+    {
+        background-size: 180px auto;
+    }
+
     &.current
     {
         .i1
         {
-            @extend %ph_bounceOutLeft;
+            @include flipInY;
+        }
+
+        .i2
+        {
+            @include rubberBand;
+        }
+
+        .i3
+        {
+            @include bounceInDown;
         }
     }
+}
 
+
+/*part2*/
+.part2
+{
+    .i1
+    {
+        background-size: 270px auto;
+    }
+
+    .i2
+    {
+        background-size: 180px auto;
+    }
+
+    .i3
+    {
+        background-size: 270px auto;
+    }
+
+    &.current
+    {
+        .i1
+        {
+            @include bounceInLeft;
+        }
+
+        .i2
+        {
+            @include rollIn;
+        }
+
+        .i3
+        {
+            @include lightSpeedIn;
+        }
+    }
+}
+
+
+/*part3*/
+.part3
+{
     .i1
     {
         //background: url(../images/i1.png) no-repeat center center / 270px auto;//安卓4.0-4.3不支持呀,泥煤的
         background-size: 270px auto;
 
-        //@include ani_trans($ty: -40%, $ry: -180deg, $rx: 45deg);
-        opacity: 1 !important;
+        @include ani_trans($ty: -40%, $ry: -180deg, $rx: 45deg);
     }
 
     .i2
@@ -74,7 +154,6 @@
         background-size: cover;
 
         @include ani_trans($sx: 2, $sy: 2, $ry: -180deg);
-        @include mx_animation(ani_circle 1s ease 2s infinite);
     }
 
     .i3
@@ -83,11 +162,19 @@
 
         @include ani_trans($rx: -180deg, $ry: 90deg, $ty: -40%);
     }
+
+    &.current
+    {
+        .i2
+        {
+            @include mx_animation(ani_circle 1s ease 2s infinite);
+        }
+    }
 }
 
 
-/*part2*/
-.part2
+/*part4*/
+.part4
 {
     .i1
     {
