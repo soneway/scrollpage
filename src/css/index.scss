@@ -5,13 +5,15 @@
 
 
 /*其他*/
+
 /*mainbox*/
 #mainbox
 {
     @extend %ph_full;
     overflow: hidden;
+    /*暗色背景缓解闪烁*/
+    background: #222;
 }
-
 
 
 /*动画*/

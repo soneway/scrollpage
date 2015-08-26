@@ -38,10 +38,13 @@
 }
 
 
-[class^="i"]
+[class^="part"]
 {
-    @extend %ph_palt;
-    @extend %ph_full;
+    & > *
+    {
+        @extend %ph_palt;
+        @extend %ph_full;
+    }
 }
 
 

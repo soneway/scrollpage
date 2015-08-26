@@ -8,7 +8,7 @@ ui/base
   overflow: auto;
   -webkit-overflow-scrolling: touch; }
 
-.absolute, #mainbox, #loading, #carousel, [class^="i"] {
+.absolute, #mainbox, #loading, #carousel, [class^="part"] > * {
   position: absolute;
   left: 0;
   top: 0; }
@@ -23,7 +23,7 @@ ui/base
   left: 0;
   bottom: 0; }
 
-#mainbox, #loading, #mask, #carousel, [class^="i"] {
+#mainbox, #loading, #mask, #carousel, [class^="part"] > * {
   width: 100%;
   height: 100%; }
 
@@ -339,7 +339,9 @@ span {
 /*其他*/
 /*mainbox*/
 #mainbox {
-  overflow: hidden; }
+  overflow: hidden;
+  /*暗色背景缓解闪烁*/
+  background: #222; }
 
 /*动画*/
 /*
@@ -382,9 +384,11 @@ transform动画函数ani_trans
   -webkit-animation-duration: 0.8s;
   animation-duration: 0.8s;
   visibility: hidden;
+  opacity: 0;
   /*复位动画*/ }
   .current .ani-item {
     visibility: visible;
+    opacity: 1;
     /*相应倍率的延迟后做动画*/ }
     .current .ani-item.ani-x1 {
       -webkit-animation-delay: 1.1s;
@@ -479,60 +483,46 @@ transform动画函数ani_trans
 
 @-webkit-keyframes flipInY
 {
-  from
+  0%
 {
     -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
-    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
     -webkit-animation-timing-function: ease-in;
-    animation-timing-function: ease-in;
     opacity: 0; }
   40%
 {
     -webkit-transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
-    transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
-    -webkit-animation-timing-function: ease-in;
-    animation-timing-function: ease-in; }
+    -webkit-animation-timing-function: ease-in; }
   60%
 {
     -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
-    transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
     opacity: 1; }
   80%
 {
-    -webkit-transform: perspective(400px) rotate3d(0, 1, 0, -5deg);
-    transform: perspective(400px) rotate3d(0, 1, 0, -5deg); }
+    -webkit-transform: perspective(400px) rotate3d(0, 1, 0, -5deg); }
   100%
 {
-    -webkit-transform: perspective(400px);
-    transform: perspective(400px); } }
+    -webkit-transform: perspective(400px); } }
 
 @keyframes flipInY
 {
-  from
+  0%
 {
-    -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
     transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
-    -webkit-animation-timing-function: ease-in;
     animation-timing-function: ease-in;
     opacity: 0; }
   40%
 {
-    -webkit-transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
     transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
-    -webkit-animation-timing-function: ease-in;
     animation-timing-function: ease-in; }
   60%
 {
-    -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
     transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
     opacity: 1; }
   80%
 {
-    -webkit-transform: perspective(400px) rotate3d(0, 1, 0, -5deg);
     transform: perspective(400px) rotate3d(0, 1, 0, -5deg); }
   100%
 {
-    -webkit-transform: perspective(400px);
     transform: perspective(400px); } }
 
 .part1.current
@@ -710,28 +700,24 @@ transform动画函数ani_trans
 
 @-webkit-keyframes rollIn
 {
-  from
+  0%
 {
     opacity: 0;
-    -webkit-transform: translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg);
-    transform: translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg); }
+    -webkit-transform: translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg); }
   100%
 {
     opacity: 1;
-    -webkit-transform: none;
-    transform: none; } }
+    -webkit-transform: none; } }
 
 @keyframes rollIn
 {
-  from
+  0%
 {
     opacity: 0;
-    -webkit-transform: translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg);
     transform: translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg); }
   100%
 {
     opacity: 1;
-    -webkit-transform: none;
     transform: none; } }
 
 .part2.current
@@ -741,47 +727,39 @@ transform动画函数ani_trans
 
 @-webkit-keyframes lightSpeedIn
 {
-  from
+  0%
 {
     -webkit-transform: translate3d(100%, 0, 0) skewX(-30deg);
-    transform: translate3d(100%, 0, 0) skewX(-30deg);
     opacity: 0; }
   60%
 {
     -webkit-transform: skewX(20deg);
-    transform: skewX(20deg);
     opacity: 1; }
   80%
 {
     -webkit-transform: skewX(-5deg);
-    transform: skewX(-5deg);
     opacity: 1; }
   100%
 {
     -webkit-transform: none;
-    transform: none;
     opacity: 1; } }
 
 @keyframes lightSpeedIn
 {
-  from
+  0%
 {
-    -webkit-transform: translate3d(100%, 0, 0) skewX(-30deg);
     transform: translate3d(100%, 0, 0) skewX(-30deg);
     opacity: 0; }
   60%
 {
-    -webkit-transform: skewX(20deg);
     transform: skewX(20deg);
     opacity: 1; }
   80%
 {
-    -webkit-transform: skewX(-5deg);
     transform: skewX(-5deg);
     opacity: 1; }
   100%
 {
-    -webkit-transform: none;
     transform: none;
     opacity: 1; } }
 
