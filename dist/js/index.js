@@ -20,7 +20,9 @@ require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requ
             //是否显示title
             isShowTitle  : true,
             //是否显示pager
-            isShowPager  : true
+            isShowPager  : true,
+            //初始index
+            initIndex    : 0
         };
 
         //每个元素执行
@@ -34,7 +36,8 @@ require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requ
                 autoPlayInter = opts.autoPlayInter,
                 slideCallback = opts.slideCallback,
                 isShowTitle = opts.isShowTitle,
-                isShowPager = opts.isShowPager;
+                isShowPager = opts.isShowPager,
+                initIndex = opts.initIndex;
 
             //变量
             var $this = $(this),
@@ -44,26 +47,26 @@ require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requ
 
             //初始化函数
             function init() {
-                $this.addClass('pi-carousel').html('<div class="pi-carousel-wrap">' + $this.html() + '</div>' + (isShowTitle ? '<div class="pi-carousel-title"></div>' : ''));
+                $this.addClass('pi-carousel').html('<div class="pi-wrap">' + $this.html() + '</div>' + (isShowTitle ? '<div class="pi-title"></div>' : ''));
 
-                $wrap = $this.find('.pi-carousel-wrap');
+                $wrap = $this.find('.pi-wrap');
                 wrapElStyle = $wrap[0].style;
                 $items = $wrap.children('*');
                 itemCount = $items.length;
 
                 isVertical && $this.addClass('vertical');
-                $title = $this.find('.pi-carousel-title');
+                $title = $this.find('.pi-title');
 
                 //pager
                 var html = '';
                 if (isShowPager) {
-                    html += '<div class="pi-carousel-pager">';
+                    html += '<div class="pi-pager">';
                     for (var i = 0, len = itemCount; i < len; i++) {
                         html += '<span></span>';
                     }
                     html += '</div>';
                 }
-                $pagers = $this.append(html).find('.pi-carousel-pager span');
+                $pagers = $this.append(html).find('.pi-pager span');
 
                 //初始化事件
                 initEvent();
@@ -71,7 +74,7 @@ require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requ
 
             //初始化事件函数
             function initEvent() {
-                var width, height, inter, index = 0,
+                var width, height, inter, index = initIndex,
                     startX, startY,
                     swipSpan;
 
@@ -256,13 +259,9 @@ require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requ
     //文档$对象
         $doc = $(document),
     //body $对象
-        $body = $(document.body);
-
-
-    //去掉部分浏览器地址栏(ucweb,qq有效)
-    $body.addClass('very-high');
-    window.scrollTo(0, 1);
-    $body.removeClass('very-high');
+        $body = $(document.body),
+    //mainbox $对象
+        $mainbox = $('#mainbox');
 
 
     /**
@@ -270,6 +269,19 @@ require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requ
      * @type {boolean}
      */
     $.isShowQrcode = true;
+
+
+    /**
+     * 是否body滚动
+     * @type {string}
+     */
+    $.isBodyScroll = $mainbox.css('overflow') !== 'hidden';
+    //去掉部分浏览器地址栏(ucweb,qq有效)
+    if (!$.isBodyScroll) {
+        $body.addClass('very-high');
+        window.scrollTo(0, 1);
+        $body.removeClass('very-high');
+    }
 
 
     var ua = navigator.userAgent;
@@ -280,30 +292,23 @@ require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requ
     $.isMobi = /(iPhone|iPod|iPad|android|windows phone os|iemobile)/i.test(ua);
     /**
      * 是否为安卓
-     * @type {string}
+     * @type {boolean}
      */
     $.isAndroid = /(android)/i.test(ua);
     /**
      * 是否为ios
-     * @type {string}
+     * @type {boolean}
      */
     $.isIos = /(iPhone|iPod|iPad)/i.test(ua);
 
 
     /**
      * 显示/隐藏mask函数
-     * @param isShow 是否显示
+     * @param {boolean} isShow 是否显示
      */
-    $.toggleMask = (function () {
-        var $mask = $('#mask');
-        if ($mask.length === 0) {
-            $mask = $('<div id="mask"></div>');
-            $body.append($mask);
-        }
-        return function (isShow) {
-            isShow ? $mask.addClass('visible') : $mask.removeClass('visible');
-        };
-    })();
+    $.toggleMask = function (isShow) {
+        isShow ? $body.addClass('onmask') : $body.removeClass('onmask');
+    };
 
 
     //文档加载完成
@@ -318,7 +323,7 @@ require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requ
         $doc.on('touchstart', 'a', function () {
             $(this).addClass('focus');
         });
-        $doc.on('touchend', 'a', function () {
+        $doc.on('touchend touchmove', 'a', function () {
             $(this).removeClass('focus');
         });
 
@@ -361,7 +366,9 @@ require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requ
     });
 
 })(window);
-},{"base":2,"carousel":1,"jq":"5wsLTu"}],"5wsLTu":[function(require,module,exports){
+},{"base":2,"carousel":1,"jq":"5wsLTu"}],"jq":[function(require,module,exports){
+module.exports=require('5wsLTu');
+},{}],"5wsLTu":[function(require,module,exports){
 (function (global){
 (function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
 //jq.js
@@ -946,6 +953,7 @@ require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requ
             appendTo: function (el) {
                 var $el = el instanceof $init ? el : $(el);
                 $el.append(this);
+                return this;
             },
 
             /**
@@ -956,6 +964,7 @@ require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requ
             prependTo: function (el) {
                 var $el = el instanceof $init ? el : $(el);
                 $el.append(this, true);
+                return this;
             },
 
             /**
@@ -1282,6 +1291,4 @@ require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requ
 }).call(global, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],"jq":[function(require,module,exports){
-module.exports=require('5wsLTu');
 },{}]},{},[3])

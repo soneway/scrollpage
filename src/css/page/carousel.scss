@@ -40,6 +40,8 @@
 
 [class^="part"]
 {
+    position: relative;
+
     & > *
     {
         @extend %ph_palt;

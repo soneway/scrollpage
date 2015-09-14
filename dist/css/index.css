@@ -8,36 +8,41 @@ ui/base
   overflow: auto;
   -webkit-overflow-scrolling: touch; }
 
-.absolute, #mainbox, #loading, #carousel, [class^="part"] > * {
+#carousel, [class^="part"] > * {
   position: absolute;
   left: 0;
   top: 0; }
 
-.fixed, #mask {
-  position: fixed;
-  left: 0;
-  top: 0; }
-
-.pi-carousel-title {
+.pi-carousel
+.pi-title {
   position: absolute;
   left: 0;
   bottom: 0; }
 
-#mainbox, #loading, #mask, #carousel, [class^="part"] > * {
+#mainbox, #carousel, [class^="part"] > * {
   width: 100%;
   height: 100%; }
 
-.fade-out, .fade-in, .transition, #loading, .pi-carousel-title {
+#mainbox, #loading, .onmask:after {
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0; }
+
+#mainbox, #loading {
+  position: absolute; }
+
+.onmask:after {
+  position: fixed; }
+
+.fade-out, .fade-in, .transition, #loading {
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease; }
 
-.transform, .pi-carousel-wrap.transform {
+.transform, .pi-carousel
+.pi-title {
   -webkit-transition: -webkit-transform 0.3s ease;
   transition: transform 0.3s ease; }
-
-*, *:before, *:after {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box; }
 
 #loading {
   display: -webkit-box;
@@ -93,30 +98,32 @@ scss/ani_circle
   animation: ani_circle 1s ease infinite; }
 
 /*元素*/
-*:focus {
-  outline: none; }
-
 *, *:before, *:after {
   margin: 0;
   padding: 0;
-  /*将元素的padding,border也纳入宽度,相当于IE5的盒子模型*/ }
+  /*将元素的padding,border也纳入宽度,相当于IE5的盒子模型*/
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  /*不使用占位符生成css代码,是避免多一次选择器的匹配*/
+  /*@extend %ph_border-box;*/ }
 
 body {
-  background-color: #fff;
   /*加背景色可减缓页面闪烁*/
+  background-color: #fff;
   overflow-x: hidden;
   /*可继承*/
   color: #333;
   line-height: 1.5;
   font-size: 14px;
+  font-family: arial, helvetica, sans-serif;
   -webkit-text-size-adjust: none;
+  /*禁止选中文本*/
   -webkit-user-select: none;
   user-select: none;
-  /*禁止选中文本*/
-  -webkit-tap-highlight-color: transparent;
   /*部分浏览器点选时会有淡蓝色框,这样可以去掉*/
-  -webkit-touch-callout: none;
-  /*禁止保存图片*/ }
+  -webkit-tap-highlight-color: transparent;
+  /*禁止保存图片*/
+  -webkit-touch-callout: none; }
 
 input, textarea {
   -webkit-user-select: text;
@@ -161,15 +168,16 @@ h4 {
 /*btn*/
 .btn {
   display: inline-block;
-  line-height: 2em;
+  font-size: 16px;
+  line-height: 2;
   min-width: 5.5em;
   padding: 0 1.25em;
   border-radius: 0.5em;
-  font-size: 1.15em;
   text-align: center;
-  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.9);
+  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
   background-color: #f8f8f8;
+  /*固定颜色*/
   color: #333; }
   .btn.focus {
     background-color: #eee; }
@@ -181,6 +189,10 @@ h4 {
 /*显示*/
 .show {
   display: block !important; }
+
+.fade-out, .fade-in {
+  -webkit-transition-property: opacity, visibility;
+  transition-property: opacity, visibility; }
 
 /*渐隐*/
 .fade-out {
@@ -203,7 +215,6 @@ h4 {
 .center {
   text-align: center; }
 
-/*定位*/
 /*动画*/
 .notrans {
   -webkit-transition: none !important;
@@ -222,13 +233,15 @@ h4 {
 #loading {
   background-color: #fff;
   z-index: 5;
+  /*防止点击事件绑定不到(ios8)*/
   cursor: pointer;
-  /*防止点击事件绑定不到(ios8)*/ }
+  -webkit-transition-property: background-color, visibility;
+  transition-property: background-color, visibility; }
   .loaded #loading {
     visibility: hidden;
     background-color: transparent; }
     .loaded #loading:before, .loaded #loading:after {
-      visibility: hidden; }
+      opacity: 0; }
   .onsidebox #loading {
     visibility: visible;
     background-color: rgba(0, 0, 0, 0.7); }
@@ -246,34 +259,35 @@ h4 {
   height: 200px; }
 
 /*mask*/
-#mask {
-  z-index: 9999;
-  background-color: rgba(0, 0, 0, 0.5);
-  visibility: hidden;
-  opacity: 0; }
-  #mask:before {
-    /*负数*/
-    /*负数1*/
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 10px;
-    height: 10px;
-    margin-left: -5px;
-    margin-top: -5px;
-    border-radius: 10px;
-    /*如.ani_spinner元素中有transform,:before内容将不能被背景图挡住*/
-    z-index: -1;
-    /*8个圆点用阴影生成*/
-    -webkit-box-shadow: 0 -20px 0 white, -14px -14px 0 rgba(255, 255, 255, 0.875), -20px 0 0 rgba(255, 255, 255, 0.75), -14px 14px 0 rgba(255, 255, 255, 0.625), 0 20px 0 rgba(255, 255, 255, 0.5), 14px 14px 0 rgba(255, 255, 255, 0.375), 20px 0 0 rgba(255, 255, 255, 0.25), 14px -14px 0 rgba(255, 255, 255, 0.125);
-    box-shadow: 0 -20px 0 white, -14px -14px 0 rgba(255, 255, 255, 0.875), -20px 0 0 rgba(255, 255, 255, 0.75), -14px 14px 0 rgba(255, 255, 255, 0.625), 0 20px 0 rgba(255, 255, 255, 0.5), 14px 14px 0 rgba(255, 255, 255, 0.375), 20px 0 0 rgba(255, 255, 255, 0.25), 14px -14px 0 rgba(255, 255, 255, 0.125);
-    /*动画*/
-    -webkit-animation: ani_circle 1s ease infinite;
-    animation: ani_circle 1s ease infinite; }
-  #mask.visible {
-    visibility: visible;
-    opacity: 1; }
+.onmask:before {
+  /*负数*/
+  /*负数1*/
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  margin-top: -5px;
+  border-radius: 10px;
+  /*如.ani_spinner元素中有transform,:before内容将不能被背景图挡住*/
+  z-index: -1;
+  /*8个圆点用阴影生成*/
+  -webkit-box-shadow: 0 -20px 0 white, -14px -14px 0 rgba(255, 255, 255, 0.875), -20px 0 0 rgba(255, 255, 255, 0.75), -14px 14px 0 rgba(255, 255, 255, 0.625), 0 20px 0 rgba(255, 255, 255, 0.5), 14px 14px 0 rgba(255, 255, 255, 0.375), 20px 0 0 rgba(255, 255, 255, 0.25), 14px -14px 0 rgba(255, 255, 255, 0.125);
+  box-shadow: 0 -20px 0 white, -14px -14px 0 rgba(255, 255, 255, 0.875), -20px 0 0 rgba(255, 255, 255, 0.75), -14px 14px 0 rgba(255, 255, 255, 0.625), 0 20px 0 rgba(255, 255, 255, 0.5), 14px 14px 0 rgba(255, 255, 255, 0.375), 20px 0 0 rgba(255, 255, 255, 0.25), 14px -14px 0 rgba(255, 255, 255, 0.125);
+  /*动画*/
+  -webkit-animation: ani_circle 1s ease infinite;
+  animation: ani_circle 1s ease infinite; }
+
+.onmask:before {
+  z-index: 10000;
+  position: fixed; }
+
+.onmask:after {
+  content: '';
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 9999; }
 
 /*
 plugin/carousel
@@ -282,21 +296,21 @@ plugin/carousel
 .pi-carousel {
   overflow: hidden;
   /*防止动画过程闪烁*/
-  /*防止动画过程闪烁*/
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  position: relative; }
-
-/*滚动容器*/
-  .pi-carousel-wrap > * {
+  position: relative;
+  /*垂直滚动样式*/
+  /*滚动容器*/
+  /*title*/
+  /*pager*/ }
+  .pi-carousel.vertical .pi-wrap > *, .pi-carousel.vertical
+.pi-pager > span {
+    float: none; }
+  .pi-carousel
+.pi-wrap > * {
     display: block;
     float: left;
     overflow: hidden; }
-    .vertical > .pi-carousel-wrap > * {
-      float: none; }
-
-/*title*/
-  .pi-carousel-title {
+  .pi-carousel
+.pi-title {
     width: 100%;
     line-height: 1.1;
     background-color: rgba(0, 0, 0, 0.5);
@@ -306,17 +320,17 @@ plugin/carousel
     /*动画*/
     -webkit-transform: translate3d(0, 100%, 0);
     transform: translate3d(0, 100%, 0); }
-    .pi-carousel-title.visible {
+    .pi-carousel
+.pi-title.visible {
       -webkit-transform: translate3d(0, 0, 0);
       transform: translate3d(0, 0, 0); }
-
-/*pager*/
-  .pi-carousel-pager {
+  .pi-carousel
+.pi-pager {
     position: absolute;
     right: 4px;
     bottom: 4px; }
-    .pi-carousel-pager
-span {
+    .pi-carousel
+.pi-pager > span {
       display: block;
       float: left;
       margin: 0 4px 4px 0;
@@ -327,14 +341,11 @@ span {
       box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
       background-color: rgba(255, 255, 255, 0.5);
       cursor: pointer; }
-      .pi-carousel-pager
-span.selected {
+      .pi-carousel
+.pi-pager > span.selected {
         -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.9);
         box-shadow: 0 0 3px rgba(0, 0, 0, 0.9);
         background-color: rgba(255, 255, 255, 0.9); }
-      .vertical > .pi-carousel-pager
-span {
-        float: none; }
 
 /*其他*/
 /*mainbox*/
@@ -456,6 +467,9 @@ transform动画函数ani_trans
     background: url(../img/part4/i2.png) center center no-repeat; }
   .part4 .i3 {
     background: url(../img/part4/i3.png) center center no-repeat; }
+
+[class^="part"] {
+  position: relative; }
 
 /*part1*/
 .part1
