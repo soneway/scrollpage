@@ -144,8 +144,9 @@ require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requ
                 setSize();
 
                 //暴露slideToIndex方法
-                me.slideToIndex = function (i) {
+                me.slideToIndex = function (i, isNoAnimation) {
                     index = i;
+                    isNoAnimation ? $wrap.removeClass('transform') : $wrap.addClass('transform');
                     slide();
                 };
 

@@ -301,8 +301,7 @@ plugin/carousel
   /*滚动容器*/
   /*title*/
   /*pager*/ }
-  .pi-carousel.vertical .pi-wrap > *, .pi-carousel.vertical
-.pi-pager > span {
+  .pi-carousel.vertical > .pi-wrap > *, .pi-carousel.vertical > .pi-pager > span {
     float: none; }
   .pi-carousel
 .pi-wrap > * {
@@ -347,14 +346,6 @@ plugin/carousel
         box-shadow: 0 0 3px rgba(0, 0, 0, 0.9);
         background-color: rgba(255, 255, 255, 0.9); }
 
-/*其他*/
-/*mainbox*/
-#mainbox {
-  overflow: hidden;
-  /*暗色背景缓解闪烁*/
-  background: #222; }
-
-/*动画*/
 /*
 transform动画函数ani_trans
 以及,简单动画类ani-item
@@ -422,9 +413,15 @@ transform动画函数ani_trans
       -webkit-transition-delay: 3.5s;
       transition-delay: 3.5s; }
 
+/*其他*/
+/*mainbox*/
+#mainbox {
+  overflow: hidden;
+  /*暗色背景缓解闪烁*/
+  background: #222; }
+
 /*轮播*/
-#carousel
-.pi-carousel-wrap > div {
+[class^="part"] {
   position: relative; }
 
 /*每一部分的背景图*/
@@ -467,9 +464,6 @@ transform动画函数ani_trans
     background: url(../img/part4/i2.png) center center no-repeat; }
   .part4 .i3 {
     background: url(../img/part4/i3.png) center center no-repeat; }
-
-[class^="part"] {
-  position: relative; }
 
 /*part1*/
 .part1
