@@ -8,7 +8,7 @@ ui/base
   overflow: auto;
   -webkit-overflow-scrolling: touch; }
 
-#carousel, [class^="part"] > * {
+.panel:before, #carousel, [class^="part"] > * {
   position: absolute;
   left: 0;
   top: 0; }
@@ -19,11 +19,11 @@ ui/base
   left: 0;
   bottom: 0; }
 
-#mainbox, #carousel, [class^="part"] > * {
+.panel:before, #mainbox, #carousel, [class^="part"] > * {
   width: 100%;
   height: 100%; }
 
-#mainbox, #loading, .onmask:after {
+#mainbox, #loading, .onmask:after, #customalert {
   left: 0;
   top: 0;
   bottom: 0;
@@ -32,22 +32,33 @@ ui/base
 #mainbox, #loading {
   position: absolute; }
 
-.onmask:after {
+.onmask:after, #customalert, #header, #navbar {
   position: fixed; }
 
-.fade-out, .fade-in, .transition, #loading {
+#customalert
+.ca-box {
+  height: auto;
+  overflow: hidden; }
+
+.fade-out, .fade-in, .transition, #loading, #customalert {
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease; }
 
-.transform, .pi-carousel
+.transform, #customalert
+.ca-box, .pi-carousel
 .pi-title {
   -webkit-transition: -webkit-transform 0.3s ease;
   transition: transform 0.3s ease; }
 
-#loading {
+#loading, #customalert {
   display: -webkit-box;
   -webkit-box-align: center;
   -webkit-box-pack: center; }
+
+.pi-carousel {
+  /*防止动画过程闪烁*/
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden; }
 
 /*
 scss/ani_spinner
@@ -212,7 +223,8 @@ h4 {
   float: right; }
 
 /*居中*/
-.center {
+.center, #customalert
+.ca-box {
   text-align: center; }
 
 /*动画*/
@@ -289,6 +301,158 @@ h4 {
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 9999; }
 
+/*
+ui/base
+body可滚动页面样式
+复写了overflow:hidden;等样式,使得页面可以body滚动
+*/
+#mainbox {
+  overflow: visible; }
+  .onsidebox #mainbox {
+    overflow: hidden; }
+
+.panel {
+  height: auto;
+  min-height: 100%;
+  overflow: visible;
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  /*避免页面不够高,挡不住隐藏页面以及左边框*/ }
+  .panel:before {
+    content: '';
+    background-color: #fff;
+    z-index: -1; }
+  .reflow .panel:before {
+    height: 99999px; }
+
+/*
+plugin/customalert
+自定义提示框样式
+*/
+#customalert {
+  background-color: rgba(0, 0, 0, 0.7);
+  /*动画*/
+  opacity: 0;
+  /*用z-index:-1这种方式可以防止安卓4.2打不开弹框*/
+  z-index: -1;
+  /*显示时*/
+  /*alert样式*/ }
+  .oncustomalert #customalert {
+    z-index: 9999;
+    opacity: 1; }
+    .oncustomalert #customalert
+.ca-box {
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1); }
+  #customalert.alert
+.ca-ok {
+    width: 230px; }
+  #customalert.alert
+.ca-cancel {
+    display: none; }
+  #customalert
+.ca-box {
+    width: 280px;
+    padding: 0 0 15px 0;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.95);
+    /*动画*/
+    -webkit-transform: scale3d(0, 0, 1);
+    transform: scale3d(0, 0, 1); }
+  #customalert
+.ca-title {
+    line-height: 40px;
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.5); }
+  #customalert
+.ca-content {
+    padding: 15px 20px; }
+  #customalert
+.btn {
+    width: 110px; }
+  #customalert
+.ca-ok {
+    margin-right: 10px; }
+
+/*项目基础样式*/
+/*表单输入元素*/
+/*input, select, textarea
+{
+    height: 32px;
+    border-radius: 0;
+    border: 1px solid rgba($color, 0.5);
+    background-color: rgba(0, 0, 0, 0.1);
+    text-indent: 0.5em;
+    color: $color;
+    font-size: 12px;
+
+    &[disabled]
+    {
+        opacity: 0.5;
+    }
+}*/
+/*placeholder的颜色*/
+/*::-webkit-input-placeholder
+{
+    color: #888;
+}
+
+
+textarea
+{
+    height: 100px;
+    text-indent: 0;
+    padding: 3px;
+}*/
+#mainbox {
+  overflow: hidden;
+  /*暗色背景缓解闪烁*/
+  background: #222;
+  /*btn样式*/
+  /*.btn
+    {
+        $c: #b52c2c;
+        $cf: #f00;
+
+        border-radius: 0;
+        @include mx_box-shadow(none);
+        @include mx_gradient(left, rgba($c, 0) 0%, rgba($c, 1) 30%, rgba($c, 0.95) 50%, rgba($c, 1) 70%, rgba($c, 0) 100%);
+        font-weight: bold;
+        color: #fff;
+        line-height: 36px;
+        background-color: transparent;
+
+        &.focus
+        {
+            @include mx_gradient(left, rgba($cf, 0) 0%, rgba($cf, 1) 30%, rgba($cf, 1) 70%, rgba($cf, 0) 100%);
+        }
+
+        &[disabled]
+        {
+            opacity: 0.5;
+        }
+    }*/ }
+
+/*一级页面隐藏header*/
+/*
+#header
+{
+    visibility: hidden;
+
+    &.onsubtitle
+    {
+        visibility: visible;
+    }
+
+    @at-root
+    {
+        .panel[data-role=root]
+        {
+            padding: 0;
+        }
+    }
+}*/
 /*
 plugin/carousel
 焦点图样式
@@ -413,18 +577,12 @@ transform动画函数ani_trans
       -webkit-transition-delay: 3.5s;
       transition-delay: 3.5s; }
 
-/*其他*/
-/*mainbox*/
-#mainbox {
-  overflow: hidden;
-  /*暗色背景缓解闪烁*/
-  background: #222; }
-
 /*轮播*/
+/*每一part默认样式*/
 [class^="part"] {
   position: relative; }
 
-/*每一部分的背景图*/
+/*每一part背景图*/
 .part1 {
   background: url(../img/part1/bg.jpg) center center no-repeat;
   background-size: cover; }
