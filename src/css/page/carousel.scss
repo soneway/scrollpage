@@ -75,17 +75,18 @@
     {
         .i1
         {
-            @include flipInY;
+            @include bounceInTop($distance: 100%, $span: 10px);
+
         }
 
         .i2
         {
-            @include rubberBand;
+            @include bounceInBottom($distance: 400px, $span: 10px);
         }
 
         .i3
         {
-            @include bounceInDown;
+            @include bounceInLeft($distance: 100%);
         }
     }
 }
@@ -113,7 +114,7 @@
     {
         .i1
         {
-            @include bounceInLeft;
+            @include bounceInLeft();
         }
 
         .i2
